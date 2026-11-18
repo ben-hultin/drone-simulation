@@ -1,0 +1,9 @@
+# Agent Constraints & Drone Simulation Organization
+
+- **Stack:** PX4 SITL (flight control), Gazebo Harmonic (world and sensors), ROS 2 Jazzy (autonomy nodes and launch), MAVSDK-Python + pytest (vehicle I/O and tests). Python only for application and test code.
+- **Layout:** Group by feature under `src/` and/or ROS 2 packages: `missions/`, `autonomy/` (ROS 2 nodes), `dao/` (one folder per resource), `services/` (one file per external system). **Phase 0:** root-level `missions/`, `dao/`, and `services/` are allowed until ROS 2 packages land under `ros2_ws/`.
+- **Boundaries:** MAVSDK, PX4, and Gazebo clients live only in `services/` (e.g. `services/mavsdk_service.py`, `services/gazebo_service.py`). ROS 2 autonomy nodes never import `mavsdk`, Gazebo transport, or cloud SDKs directly. Persistence and mission logs go through `dao/`.
+- **ROS 2:** Nodes stay thin; mission and state machines live in modules. Launch parameters and timeouts live in config or launch files, not hard-coded in callbacks. Every vehicle command sequence must have explicit timeouts and a fail-safe or RTL path.
+- **File and function size:** Files must not exceed 500 lines. Functions must not exceed 50 lines. Move helpers into an adjacent `*_util.py` and import them.
+- **Python surface:** Use named functions and classes. Type hints on public functions. Do not use `from module import *`.
+- **Tests:** Colocate tests next to the file under test (e.g. `geofence.py` + `geofence_test.py`). Do not use `__tests__/`. Use pytest only. TDD for new behavior. Tests are primarily integration tests — wire real mission/autonomy modules together. Mock only MAVSDK/PX4/Gazebo and cloud clients at the `services/` boundary. Do not mock autonomy internals.

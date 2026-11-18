@@ -1,0 +1,5 @@
+mavsdk>=2.0.0
+pytest>=8.0
+pytest-cov>=5.0
+ruff>=0.4
+bandit>=1.7
