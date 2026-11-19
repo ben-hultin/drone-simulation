@@ -18,4 +18,4 @@ Phase 0 uses top-level Python packages; ROS 2 autonomy nodes land in `ros2_ws/` 
 pytest
 ```
 
-Default MAVSDK endpoint: `udpin://127.0.0.1:14540`.
+Default MAVSDK endpoint: `udpin://127.0.0.1:14540`. Live flight uses **`mavsdk-grpc`** (`pip install -r requirements-dev.txt`).

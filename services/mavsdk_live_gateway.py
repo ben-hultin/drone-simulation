@@ -9,13 +9,13 @@ from services.mavsdk_protocol import VehicleHealth
 from services.mavsdk_url_util import validate_connection_url
 
 if TYPE_CHECKING:
-    from mavsdk.system import System
+    from mavsdk_grpc.system import System
 
 DEFAULT_TELEMETRY_TIMEOUT_S = 10.0
 
 
 class MavsdkLiveGateway:
-    """Wraps mavsdk.System; lazy-imports mavsdk only for live flight."""
+    """Wraps MAVSDK System; lazy-imports mavsdk_grpc only for live flight."""
 
     def __init__(self, connection_url: str, *, allow_remote: bool = False) -> None:
         self._connection_url = validate_connection_url(
@@ -26,9 +26,9 @@ class MavsdkLiveGateway:
 
     async def wait_for_connection(self, timeout_s: float) -> bool:
         await self.close()
-        from mavsdk import System
+        import mavsdk_grpc as mavsdk
 
-        system = System()
+        system = mavsdk.System()
         try:
             async with asyncio.timeout(timeout_s):
                 await system.connect(self._connection_url)
