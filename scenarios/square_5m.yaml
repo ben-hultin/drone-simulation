@@ -1,0 +1,15 @@
+name: square_5m
+world: worlds/default.sdf
+spawn:
+  north_m: 0
+  east_m: 0
+  alt_m: 0
+goal:
+  pattern: square
+  side_m: 5
+  altitude_m: 5
+time_limit_s: 300
+pass_criteria:
+  waypoint_tolerance_m: 1
+  require_disarmed: true
+  require_no_failsafe: true

@@ -13,6 +13,8 @@ dev = [
     "pytest-cov>=5.0",
     "ruff>=0.4",
     "bandit>=1.7",
+    "pyyaml>=6.0",
+    "pyulog>=1.0",
 ]
 
 [tool.pytest.ini_options]
@@ -24,8 +26,11 @@ addopts = "-ra"
 source = ["missions", "services", "dao"]
 omit = [
     "*_test.py",
+    "missions/conftest.py",
     "missions/sitl_connectivity_runner.py",
+    "missions/square_flight_runner.py",
     "services/mavsdk_live_gateway.py",
+    "services/ulg_parser_service.py",
 ]
 branch = true
 

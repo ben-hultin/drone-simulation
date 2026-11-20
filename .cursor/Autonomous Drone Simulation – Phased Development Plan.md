@@ -15,12 +15,12 @@ Build a free, local simulation stack that flies an autonomous drone through a li
 
 Exit when `make px4_sitl gz_x500` flies on the Mac and QGroundControl connects to it.
 
-- [ ] Install Xcode CLI tools, Homebrew, raise the open-file limit
-- [ ] Clone PX4-Autopilot; run `./Tools/setup/macos.sh --sim-tools` (Gazebo Harmonic + XQuartz)
-- [ ] Install QGroundControl; arm, take off and land by hand
-- [ ] Install MAVSDK-Python and pytest in a project virtualenv
-- [ ] Create the project repo: `worlds/`, `models/`, `missions/`, `tests/`, `ros2_ws/`, `docs/`
-- [ ] Fallback if the native build fights you: Ubuntu 24.04 ARM VM in UTM, or a used Linux PC
+- [x] Install Xcode CLI tools, Homebrew, raise the open-file limit
+- [x] Clone PX4-Autopilot; run `./Tools/setup/macos.sh --sim-tools` (Gazebo Harmonic + XQuartz)
+- [x] Install QGroundControl; arm, take off and land by hand
+- [x] Install MAVSDK-Python and pytest in a project virtualenv
+- [x] Create the project repo: `worlds/`, `models/`, `missions/`, `tests/`, `ros2_ws/`, `docs/`
+- [x] Fallback if the native build fights you: Ubuntu 24.04 ARM VM in UTM, or a used Linux PC
 
 ## Phase 1 — Scripted flight and first automated test (1–2 weeks)
 
@@ -59,15 +59,15 @@ Exit when the drone flies from start to goal around a static wall it has never s
 
 Exit when one command runs every scenario headless and prints a scorecard. Each scenario = a Gazebo world + spawn/goal + pass criteria in YAML.
 
-| Scenario | What it tests | Pass criteria |
-| --- | --- | --- |
-| Single wall | Basic detect-and-avoid | Reaches goal, zero collisions |
-| Forest | Dense static obstacles | Reaches goal, min clearance ≥ 0.5 m |
-| Urban canyon | Buildings, narrow streets | Reaches goal within time limit |
-| Narrow gap | Precise path through an opening | Passes gap without contact |
-| Moving obstacle | Dynamic replanning | No collision with the mover |
-| Wind gusts | Control under disturbance | Path error within bound |
-| Precision landing | Final approach accuracy | Lands within 0.5 m of target |
+| Scenario          | What it tests                   | Pass criteria                       |
+| ----------------- | ------------------------------- | ----------------------------------- |
+| Single wall       | Basic detect-and-avoid          | Reaches goal, zero collisions       |
+| Forest            | Dense static obstacles          | Reaches goal, min clearance ≥ 0.5 m |
+| Urban canyon      | Buildings, narrow streets       | Reaches goal within time limit      |
+| Narrow gap        | Precise path through an opening | Passes gap without contact          |
+| Moving obstacle   | Dynamic replanning              | No collision with the mover         |
+| Wind gusts        | Control under disturbance       | Path error within bound             |
+| Precision landing | Final approach accuracy         | Lands within 0.5 m of target        |
 
 Metrics logged per run: success, collisions, minimum clearance, time to goal, path length vs. straight line. Thresholds above are starting points to tune.
 
@@ -104,10 +104,10 @@ About 14–20 weeks end to end for one engineer; estimates assume part of the se
 
 Phase 3 carries the most uncertainty; Phases 4–5 can start in parallel once one autonomous test passes.
 
-| Risk | Impact | Mitigation |
-| --- | --- | --- |
-| PX4/Gazebo native build breaks on macOS | Phase 0 slips | Ubuntu ARM VM in UTM, or a used Linux PC |
-| Fanless Air throttles on long runs | Slow, flaky tests | Run headless; batch suites on Linux CI |
-| ROS 2 ↔ Gazebo friction on macOS | Phase 2 slips | RoboStack natively; else move fully to Linux |
-| Planner tuning runs long | Phase 3 overruns | Start with simple reactive avoidance; reuse reference-repo design |
-| Sim-to-real gap | Passes in sim, fails in the air | Noise, wind and randomized variants; HIL before real flight |
+| Risk                                    | Impact                          | Mitigation                                                        |
+| --------------------------------------- | ------------------------------- | ----------------------------------------------------------------- |
+| PX4/Gazebo native build breaks on macOS | Phase 0 slips                   | Ubuntu ARM VM in UTM, or a used Linux PC                          |
+| Fanless Air throttles on long runs      | Slow, flaky tests               | Run headless; batch suites on Linux CI                            |
+| ROS 2 ↔ Gazebo friction on macOS        | Phase 2 slips                   | RoboStack natively; else move fully to Linux                      |
+| Planner tuning runs long                | Phase 3 overruns                | Start with simple reactive avoidance; reuse reference-repo design |
+| Sim-to-real gap                         | Passes in sim, fails in the air | Noise, wind and randomized variants; HIL before real flight       |

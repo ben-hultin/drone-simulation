@@ -1,7 +1,27 @@
 """Protocols and types for MAVSDK vehicle access (no mavsdk import)."""
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Protocol
+
+
+@dataclass(frozen=True)
+class VehiclePosition:
+    """Local NED-style position relative to home (meters; up positive)."""
+
+    north_m: float
+    east_m: float
+    alt_m: float
+
+
+@dataclass(frozen=True)
+class VehicleFlightFlags:
+    """Telemetry flags for landing and failsafe checks."""
+
+    in_air: bool
+    failsafe_triggered: bool
+    landed: bool
+    armed: bool
 
 
 @dataclass(frozen=True)
@@ -31,5 +51,21 @@ class VehicleGateway(Protocol):
     async def get_health(self) -> VehicleHealth: ...
 
     async def arm(self) -> None: ...
+
+    async def takeoff(self, altitude_m: float) -> None: ...
+
+    async def goto_local(self, north_m: float, east_m: float, altitude_m: float) -> None: ...
+
+    async def land(self) -> None: ...
+
+    async def disarm(self) -> None: ...
+
+    async def get_position(self) -> VehiclePosition: ...
+
+    async def get_flight_flags(self) -> VehicleFlightFlags: ...
+
+    async def return_to_launch(self) -> None: ...
+
+    async def latest_ulg_path(self) -> Path | None: ...
 
     async def close(self) -> None: ...
