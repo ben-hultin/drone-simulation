@@ -83,6 +83,20 @@ class MavsdkLiveGateway:
                 await system.offboard.start()
                 self._offboard_active = True
 
+    async def offboard_start(self) -> None:
+        system = self._require_connected_system()
+        target = build_position_ned_yaw(0.0, 0.0, 0.0, 0.0)
+        async with asyncio.timeout(DEFAULT_TELEMETRY_TIMEOUT_S):
+            await system.offboard.set_position_ned(target)
+            if not self._offboard_active:
+                await system.offboard.start()
+                self._offboard_active = True
+
+    async def offboard_stop(self) -> None:
+        if self._system is None:
+            return
+        await self._stop_offboard(self._system)
+
     async def land(self) -> None:
         system = self._require_connected_system()
         async with asyncio.timeout(DEFAULT_TELEMETRY_TIMEOUT_S):
@@ -151,7 +165,7 @@ class MavsdkLiveGateway:
             async with asyncio.timeout(DEFAULT_TELEMETRY_TIMEOUT_S):
                 await system.offboard.stop()
         except (TimeoutError, OSError, RuntimeError):
-            pass
+            return
         self._offboard_active = False
 
     async def _release_system(self, system: System) -> None:

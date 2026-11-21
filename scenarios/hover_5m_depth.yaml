@@ -1,0 +1,20 @@
+name: hover_5m_depth
+world: worlds/default.sdf
+model: gz_x500_depth
+spawn:
+  north_m: 0
+  east_m: 0
+  alt_m: 0
+hover:
+  altitude_m: 5
+  duration_s: 2
+  position_tolerance_m: 1
+time_limit_s: 120
+pass_criteria:
+  require_disarmed: true
+  require_no_failsafe: true
+  require_pose: true
+  require_depth_frame: true
+perception:
+  max_pose_age_s: 1.0
+  max_depth_age_s: 1.0

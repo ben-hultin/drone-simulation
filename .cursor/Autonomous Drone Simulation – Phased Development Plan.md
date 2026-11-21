@@ -26,11 +26,11 @@ Exit when `make px4_sitl gz_x500` flies on the Mac and QGroundControl connects t
 
 Exit when `pytest` launches SITL headless, flies a waypoint mission and passes or fails on its own.
 
-- [ ] MAVSDK script: connect, arm, take off to 5 m, fly a square, land
-- [ ] pytest fixture that starts and stops PX4 SITL + Gazebo headless per test
-- [ ] Assertions: reached each waypoint within 1 m, landed, disarmed, no failsafe
-- [ ] Save the `.ulg` log per run; parse it with pyulog for flight time and max position error
-- [ ] First scenario file format: world, spawn pose, goal, time limit, pass criteria (YAML)
+- [x] MAVSDK script: connect, arm, take off to 5 m, fly a square, land
+- [x] pytest fixture that starts and stops PX4 SITL + Gazebo headless per test
+- [x] Assertions: reached each waypoint within 1 m, landed, disarmed, no failsafe
+- [x] Save the `.ulg` log per run; parse it with pyulog for flight time and max position error
+- [x] First scenario file format: world, spawn pose, goal, time limit, pass criteria (YAML)
 
 ## Phase 2 — ROS 2 integration and perception (2–3 weeks)
 

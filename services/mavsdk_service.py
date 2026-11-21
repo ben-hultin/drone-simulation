@@ -133,11 +133,16 @@ class MavsdkService:
             timeout_s=max(0.1, timeout_s - cmd_budget),
         )
 
-    async def land_or_fail(self, timeout_s: float = DEFAULT_COMMAND_TIMEOUT_S) -> bool:
+    async def land_or_fail(
+        self,
+        timeout_s: float = DEFAULT_COMMAND_TIMEOUT_S,
+        *,
+        failsafe_if_inflight: bool = True,
+    ) -> bool:
         return await self._run_command(
             lambda: self._gateway.land(),
             timeout_s=timeout_s,
-            failsafe_if_inflight=True,
+            failsafe_if_inflight=failsafe_if_inflight,
         )
 
     async def disarm_or_fail(self, timeout_s: float = DEFAULT_COMMAND_TIMEOUT_S) -> bool:

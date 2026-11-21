@@ -1,0 +1,10 @@
+offboard_hover_mission:
+  scenario_path: scenarios/hover_5m_depth.yaml
+  mavsdk_url: udpin://127.0.0.1:14540
+  sitl_model: gz_x500_depth
+  connect_timeout_s: 10.0
+  hover_duration_s: 2.0
+  pose_topic: /fmu/out/vehicle_odometry
+  depth_topic: /depth_camera
+  pointcloud_topic: /points
+  fail_safe: rtl

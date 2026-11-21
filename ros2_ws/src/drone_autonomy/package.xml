@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>drone_autonomy</name>
+  <version>0.1.0</version>
+  <description>Thin ROS 2 launch and bridge config for Phase 2 hover.</description>
+  <maintainer email="dev@local">drone-simulation</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>px4_msgs</exec_depend>
+</package>

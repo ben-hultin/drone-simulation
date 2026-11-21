@@ -35,6 +35,7 @@ class FakeGateway:
         self.disarm_called = False
         self.rtl_called = False
         self.goto_calls: list[tuple[float, float, float]] = []
+        self._offboard_active = False
 
     async def wait_for_connection(self, timeout_s: float) -> bool:
         del timeout_s
@@ -56,8 +57,16 @@ class FakeGateway:
         self._position = position_at_waypoint(0.0, 0.0, altitude_m)
 
     async def goto_local(self, north_m: float, east_m: float, altitude_m: float) -> None:
+        if not self._armed:
+            raise RuntimeError("not_armed")
         self.goto_calls.append((north_m, east_m, altitude_m))
         self._position = position_at_waypoint(north_m, east_m, altitude_m)
+
+    async def offboard_start(self) -> None:
+        self._offboard_active = True
+
+    async def offboard_stop(self) -> None:
+        self._offboard_active = False
 
     async def land(self) -> None:
         self.land_called = True
